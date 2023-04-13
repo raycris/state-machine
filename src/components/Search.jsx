@@ -10,6 +10,10 @@ export const Search = ({ send, context }) => {
 
   const options = ["Mexico", "Venezuela", "Colombia"];
 
+  const goToPassengers = () => {
+    send("CONTINUE");
+  };
+
   return (
     <div className="Search">
       <p className="Search-title title">Busca tu destino</p>
@@ -28,7 +32,11 @@ export const Search = ({ send, context }) => {
           </option>
         ))}
       </select>
-      <button disabled={flight === ""} className="Search-continue button">
+      <button
+        onClick={goToPassengers}
+        disabled={flight === ""}
+        className="Search-continue button"
+      >
         Continuar
       </button>
     </div>

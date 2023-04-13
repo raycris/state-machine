@@ -13,6 +13,10 @@ export const Passengers = ({ state, send }) => {
     changeValue("");
   };
 
+  const goToTickes = () => {
+    send("DONE")
+  }
+
   return (
     <form onSubmit={submit} className="Passengers">
       <p className="Passengers-title title">
@@ -31,7 +35,7 @@ export const Passengers = ({ state, send }) => {
         <button className="Passengers-add button-secondary" type="submit">
           Agregar Pasajero
         </button>
-        <button className="Passenger-pay button" type="button">
+        <button  onClick={goToTickes} className="Passenger-pay button" type="button">
           Ver mi ticket
         </button>
       </div>

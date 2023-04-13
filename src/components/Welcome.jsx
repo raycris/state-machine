@@ -4,6 +4,7 @@ import "./Welcome.css";
 export const Welcome = ({ send }) => {
   const startBooking = () => {
     console.log("start booking");
+    send("START")
   };
 
   return (
