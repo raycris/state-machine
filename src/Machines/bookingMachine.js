@@ -3,6 +3,10 @@ import { createMachine } from "xstate";
 const bookingMachine = createMachine({
   id: "Buy plane tickets",
   initial: "initial",
+  context: {
+    passengers: [],
+    selectedCountry: "",
+  },
   states: {
     initial: {
       on: {
@@ -29,4 +33,4 @@ const bookingMachine = createMachine({
   },
 });
 
-export default bookingMachine
+export default bookingMachine;

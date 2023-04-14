@@ -11,7 +11,7 @@ export const Search = ({ send, context }) => {
   const options = ["Mexico", "Venezuela", "Colombia"];
 
   const goToPassengers = () => {
-    send("CONTINUE");
+    send("CONTINUE", { selectedCountry: flight });
   };
 
   return (
