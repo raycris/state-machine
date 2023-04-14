@@ -30,7 +30,16 @@ const bookingMachine = createMachine(
       passengers: {
         on: {
           DONE: "tickets",
-          CANCEL: "initial",
+          CANCEL: {
+            target: "initial",
+            actions: assign({ selectedCountry: "", passengers: [] }),
+          },
+          ADD: {
+            target: "passengers",
+            actions: assign((context, event) =>
+              context.passengers.push(event.newPassenger)
+            ),
+          },
         },
       },
       tickets: {
