@@ -1,12 +1,17 @@
 import React from "react";
+
 import { useMachine } from "@xstate/react";
+
 import { StepsLayout } from "./StepsLayout";
+
 import { Nav } from "../Components/Nav";
 import { Welcome } from "../Components/Welcome";
-import { Search } from "../Components/Search";
-import { Passengers } from "../Components/Passengers";
+import { Search } from "../components/Search";
+import { Passengers } from "../components/Passengers";
 import { Tickets } from "../Components/Tickets";
+
 import bookingMachine from "../Machines/bookingMachine";
+
 import "./BaseLayout.css";
 
 export const BaseLayout = () => {
@@ -18,10 +23,12 @@ export const BaseLayout = () => {
     <div className="BaseLayout">
       <Nav state={state} send={send} />
       <StepsLayout state={state} send={send}>
-        {state.matches("initial") && <Welcome send={send} />}
-        {state.matches("search") && <Search send={send} />}
-        {state.matches("tickets") && <Tickets send={send} />}
-        {state.matches("passengers") && <Passengers send={send} />}
+        {state.matches("initial") && <Welcome state={state} send={send} />}
+        {state.matches("search") && <Search state={state} send={send} />}
+        {state.matches("tickets") && <Tickets state={state} send={send} />}
+        {state.matches("passengers") && (
+          <Passengers state={state} send={send} />
+        )}
       </StepsLayout>
     </div>
   );
