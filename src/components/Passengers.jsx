@@ -4,6 +4,8 @@ import "./Passengers.css";
 export const Passengers = ({ state, send }) => {
   const [value, changeValue] = useState("");
 
+  const { passengers } = state.context;
+
   const onChangeInput = (e) => {
     changeValue(e.target.value);
   };
@@ -23,6 +25,11 @@ export const Passengers = ({ state, send }) => {
       <p className="Passengers-title title">
         Agrega a las personas que van a volar ✈️
       </p>
+      {passengers.map((person, index) => (
+        <p className="text" key={`person-${index}`}>
+          {person}
+        </p>
+      ))}
       <input
         id="name"
         name="name"
