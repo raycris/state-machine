@@ -29,7 +29,8 @@ const fillCountries = {
 
 const bookingMachine = createMachine(
   {
-    id: "Buy plane tickets",
+    predictableActionArguments: true,
+    id: "buy plane tickets",
     initial: "initial",
     context: {
       passengers: [],
@@ -57,12 +58,26 @@ const bookingMachine = createMachine(
         },
         ...fillCountries,
       },
+      tickets: {
+        after: {
+          5000: {
+            target: "initial",
+            actions: "cleanContext",
+          },
+        },
+        on: {
+          FINISH: "initial",
+        },
+      },
       passengers: {
         on: {
-          DONE: "tickets",
+          DONE: {
+            target: "tickets",
+            cond: "moreThanOnePassenger",
+          },
           CANCEL: {
             target: "initial",
-            actions: assign({ selectedCountry: "", passengers: [] }),
+            actions: "cleanContext",
           },
           ADD: {
             target: "passengers",
@@ -72,19 +87,21 @@ const bookingMachine = createMachine(
           },
         },
       },
-      tickets: {
-        after: {
-          5000: {
-            target: "initial",
-            actions: assign({ selectedCountry: "", passengers: [] }),
-          },
-        },
-        on: {
-          FINISH: "initial",
-        },
-      },
     },
   },
+  {
+    actions: {
+      cleanContext: assign({
+        selectedCountry: "",
+        passengers: [],
+      }),
+    },
+    guards: {
+      moreThanOnePassenger: (context) => {
+        return context.passengers.length > 0;
+      },
+    },
+  }
 );
 
 export default bookingMachine;
