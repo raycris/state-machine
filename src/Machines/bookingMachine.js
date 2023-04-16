@@ -1,4 +1,31 @@
 import { assign, createMachine } from "xstate";
+import { fetchCountries } from "../utils/api";
+
+const fillCountries = {
+  initial: "loading",
+  states: {
+    loading: {
+      invoke: {
+        id: "getCountries",
+        src: () => fetchCountries,
+        onDone: {
+          target: "success",
+          actions: assign({ contries: (context, event) => event.data }),
+        },
+        onError: {
+          target: "failure",
+          actions: assign({ error: "Falló el request" }),
+        },
+      },
+    },
+    success: {},
+    failure: {
+      on: {
+        RETRY: { target: "loading" },
+      },
+    },
+  },
+};
 
 const bookingMachine = createMachine(
   {
@@ -7,6 +34,8 @@ const bookingMachine = createMachine(
     context: {
       passengers: [],
       selectedCountry: "",
+      countries: [],
+      error: "",
     },
     states: {
       initial: {
@@ -26,6 +55,7 @@ const bookingMachine = createMachine(
           },
           CANCEL: "initial",
         },
+        ...fillCountries,
       },
       passengers: {
         on: {
