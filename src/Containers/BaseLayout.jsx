@@ -24,7 +24,7 @@ export const BaseLayout = () => {
       <Nav state={state} send={send} />
       <StepsLayout state={state} send={send}>
         {state.matches("initial") && <Welcome send={send} />}
-        {state.matches("search") && <Search send={send} />}
+        {state.matches("search") && <Search state={state} send={send} />}
         {state.matches("tickets") && <Tickets send={send} />}
         {state.matches("passengers") && (
           <Passengers state={state} send={send} />

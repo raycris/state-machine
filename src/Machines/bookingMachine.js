@@ -73,19 +73,18 @@ const bookingMachine = createMachine(
         },
       },
       tickets: {
+        after: {
+          5000: {
+            target: "initial",
+            actions: assign({ selectedCountry: "", passengers: [] }),
+          },
+        },
         on: {
           FINISH: "initial",
         },
       },
     },
   },
-  {
-    actions: {
-      imprimirInicio: () => console.log("imprimir inicio"),
-      imprimiEntrada: () => console.log("imprimir entreada a search"),
-      imprimiSalida: () => console.log("imprimir salida del search"),
-    },
-  }
 );
 
 export default bookingMachine;
